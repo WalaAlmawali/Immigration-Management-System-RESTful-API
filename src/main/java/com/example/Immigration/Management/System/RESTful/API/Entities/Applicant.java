@@ -4,8 +4,8 @@ import com.example.Immigration.Management.System.RESTful.API.Person;
 import jakarta.persistence.*;
 
 import java.util.List;
-
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Applicant extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class Applicant extends Person {
 
     private boolean criminalRecord;
 
-    @OneToMany(mappedBy = "applicant")
+    @OneToMany(mappedBy="applicant")
     private List<VisaApplication> visaApplications;
 
-    @OneToMany(mappedBy = "applicant")
+    @OneToMany(mappedBy="applicant")
     private List<Interview> interviews;
 
     public Applicant() {

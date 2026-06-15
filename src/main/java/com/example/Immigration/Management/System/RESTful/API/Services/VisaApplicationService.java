@@ -4,7 +4,7 @@ import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Entities.VisaApplication;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
-import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationOfficerRepository;
+import com.example.Immigration.Management.System.RESTful.API.Repository.OfficerRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.VisaApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,9 @@ public class VisaApplicationService {
 
     private final VisaApplicationRepository visaRepository;
     private final ApplicantRepository applicantRepository;
-    private final ImmigrationOfficerRepository officerRepository;
+    private final OfficerRepository officerRepository;
 
-    public VisaApplicationService(VisaApplicationRepository visaRepository,
-                                  ApplicantRepository applicantRepository,
-                                  ImmigrationOfficerRepository officerRepository) {
+    public VisaApplicationService(VisaApplicationRepository visaRepository, ApplicantRepository applicantRepository, OfficerRepository officerRepository) {
         this.visaRepository = visaRepository;
         this.applicantRepository = applicantRepository;
         this.officerRepository = officerRepository;

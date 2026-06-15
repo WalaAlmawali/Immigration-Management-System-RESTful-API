@@ -1,7 +1,6 @@
 package com.example.Immigration.Management.System.RESTful.API.Entities;
 
 import jakarta.persistence.*;
-
 @Entity
 public class AsylumSeeker extends Applicant {
 

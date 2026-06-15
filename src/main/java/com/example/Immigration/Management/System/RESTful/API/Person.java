@@ -1,5 +1,6 @@
 package com.example.Immigration.Management.System.RESTful.API;
 
+
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass

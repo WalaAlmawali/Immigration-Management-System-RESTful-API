@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OfficerRepository  extends JpaRepository<ImmigrationOfficer, Long> {
 
+    List<ImmigrationOfficer> findByRank(String rank);
+
 }

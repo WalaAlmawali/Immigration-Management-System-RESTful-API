@@ -1,5 +1,10 @@
 package com.example.Immigration.Management.System.RESTful.API.Entities;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
 public class BorderControlOfficer extends ImmigrationOfficer {
 
     private String assignedCheckpoint;

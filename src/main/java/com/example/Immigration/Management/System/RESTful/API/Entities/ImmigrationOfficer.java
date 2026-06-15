@@ -6,13 +6,15 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public class ImmigrationOfficer extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String badgeNumber;
-    private String rank;
+    private String rankOfficer;
     private int clearanceLevel;
     private boolean active;
 
@@ -42,11 +44,11 @@ public class ImmigrationOfficer extends Person {
     }
 
     public String getRank() {
-        return rank;
+        return rankOfficer;
     }
 
     public void setRank(String rank) {
-        this.rank = rank;
+        this.rankOfficer = rank;
     }
 
     public int getClearanceLevel() {

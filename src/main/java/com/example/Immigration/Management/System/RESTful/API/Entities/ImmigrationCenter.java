@@ -3,7 +3,6 @@ package com.example.Immigration.Management.System.RESTful.API.Entities;
 import jakarta.persistence.*;
 
 import java.util.List;
-
 @Entity public class ImmigrationCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

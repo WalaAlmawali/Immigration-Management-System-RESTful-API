@@ -1,6 +1,7 @@
 package com.example.Immigration.Management.System.RESTful.API.Services;
 
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
+import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Entities.VisaApplication;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationOfficerRepository;
@@ -35,6 +36,24 @@ public class VisaApplicationService {
             visa.setOfficerNotes("Auto-rejected due to criminal flag.");
         } else {
             visa.setStatus("PENDING");
+        }
+
+        return visaRepository.save(visa);
+
+    }
+
+    public VisaApplication assignOfficer(Long visaId, Long officerId) {
+
+        VisaApplication visa = visaRepository.findById(visaId)
+                .orElseThrow(()-> new RuntimeException("Visa not found"));
+
+        ImmigrationOfficer officer = officerRepository.findById(officerId)
+                .orElseThrow(()-> new RuntimeException("Officer not found"));
+
+        if(visa.getVisaType().equalsIgnoreCase("Asylum") && (officer.getClearanceLevel() == 4 || officer.getClearanceLevel() ==5)){
+            visa.setHandlingOfficer(officer);
+        }else{
+            throw new RuntimeException("Officer clearance too low for Asylum visa (must be 4 or 5)");
         }
 
         return visaRepository.save(visa);

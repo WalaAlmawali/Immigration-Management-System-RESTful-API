@@ -3,6 +3,8 @@ package com.example.Immigration.Management.System.RESTful.API.Entities;
 import com.example.Immigration.Management.System.RESTful.API.Person;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class ImmigrationOfficer extends Person {
     @Id
@@ -13,6 +15,15 @@ public class ImmigrationOfficer extends Person {
     private String rank;
     private int clearanceLevel;
     private boolean active;
+
+    @ManyToOne
+    private ImmigrationCenter center;
+
+    @OneToMany(mappedBy = "handlingOfficer")
+    private List<VisaApplication> visaApplications;
+
+    @OneToMany(mappedBy = "officer")
+    private List<Interview> interviews;
 
     public Long getId() {
         return id;
@@ -52,5 +63,29 @@ public class ImmigrationOfficer extends Person {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public ImmigrationCenter getCenter() {
+        return center;
+    }
+
+    public void setCenter(ImmigrationCenter center) {
+        this.center = center;
+    }
+
+    public List<VisaApplication> getVisaApplications() {
+        return visaApplications;
+    }
+
+    public void setVisaApplications(List<VisaApplication> visaApplications) {
+        this.visaApplications = visaApplications;
+    }
+
+    public List<Interview> getInterviews() {
+        return interviews;
+    }
+
+    public void setInterviews(List<Interview> interviews) {
+        this.interviews = interviews;
     }
 }

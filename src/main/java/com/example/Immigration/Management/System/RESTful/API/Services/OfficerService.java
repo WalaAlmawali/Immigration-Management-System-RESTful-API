@@ -1,5 +1,6 @@
 package com.example.Immigration.Management.System.RESTful.API.Services;
 
+import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationCenter;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationCenterRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationOfficerRepository;
@@ -28,6 +29,18 @@ public class OfficerService {
         officer.setRank(newRank);
         officer.setClearanceLevel(newClearanceLevel);
 
+        return officerRepository.save(officer);
+    }
+
+    public ImmigrationOfficer transferOfficer(Long officerId, Long newCenterId) {
+
+        ImmigrationOfficer officer = officerRepository.findById(officerId)
+                .orElseThrow(() -> new RuntimeException("Officer not found"));
+
+        ImmigrationCenter center = centerRepository.findById(newCenterId)
+                .orElseThrow(() -> new RuntimeException("Center not found"));
+
+        officer.setCenter(center);
         return officerRepository.save(officer);
     }
 

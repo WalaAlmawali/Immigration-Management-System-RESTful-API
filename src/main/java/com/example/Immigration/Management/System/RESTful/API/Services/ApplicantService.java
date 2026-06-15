@@ -1,9 +1,12 @@
 package com.example.Immigration.Management.System.RESTful.API.Services;
 
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
+import com.example.Immigration.Management.System.RESTful.API.Entities.Interview;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.InterviewRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ApplicantService {
@@ -15,7 +18,7 @@ public class ApplicantService {
         this.interviewRepository = interviewRepository;
     }
 
-    //Object
+
     public Applicant saveApplicant(Applicant applicant) {
 
         if (applicant == null) {
@@ -34,7 +37,7 @@ public class ApplicantService {
         return applicantRepository.save(applicant);
     }
 
-    //String
+
     public Applicant saveApplicant(String firstName, String lastName, String passportNumber, String nationality) {
 
         if (passportNumber == null || passportNumber.isEmpty()) {
@@ -59,5 +62,24 @@ public class ApplicantService {
 
         return applicantRepository.save(applicant);
     }
+
+    public void flagCriminalRecord(Long applicantId){
+
+        Applicant applicant = applicantRepository.findById(applicantId)
+                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+
+        applicant.setCriminalRecord(true);
+        applicantRepository.save(applicant);
+
+        List<Interview> interviews = interviewRepository.findByApplicantId(applicantId);
+
+        for(Interview interview:interviews){
+            if(interview.getStatus().equalsIgnoreCase("SCHEDULED")){
+                interview.setStatus("CANCELLED");
+            }
+        }
+        interviewRepository.saveAll(interviews);
+    }
+
 
 }

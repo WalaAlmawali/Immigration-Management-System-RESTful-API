@@ -60,4 +60,19 @@ public class VisaApplicationService {
 
     }
 
+    public VisaApplication processVisa(Long visaId, String newStatus, String notes) {
+
+        VisaApplication visa = visaRepository.findById(visaId)
+                .orElseThrow(()-> new RuntimeException("Visa not found"));
+
+        if (!newStatus.equals("APPROVED") && !newStatus.equals("REJECTED")) {
+            throw new RuntimeException("Invalid status. Only APPROVED or REJECTED allowed.");
+        }
+
+        visa.setStatus(newStatus);
+        visa.setOfficerNotes(notes);
+
+        return visaRepository.save(visa);
+    }
+
 }

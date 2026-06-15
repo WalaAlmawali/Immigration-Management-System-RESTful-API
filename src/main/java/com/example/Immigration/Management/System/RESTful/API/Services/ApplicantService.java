@@ -15,17 +15,47 @@ public class ApplicantService {
         this.interviewRepository = interviewRepository;
     }
 
-    //object
+    //Object
     public Applicant saveApplicant(Applicant applicant) {
+
+        if (applicant == null) {
+            throw new RuntimeException("Applicant not found");
+        }
 
         if (applicant.getPassportNumber() == null || applicant.getPassportNumber().isEmpty()) {
             throw new RuntimeException("Passport number cannot be null or empty");
         }
 
         if (applicant.getFirstName() == null || applicant.getFirstName().isEmpty()
-                || applicant.getLastName() == null || applicant.getLastName().isEmpty()) {
+                || applicant.getLastName() == null || applicant.getLastName().isEmpty() || applicant.getPhoneNumber() == null || applicant.getPhoneNumber().isEmpty()) {
+            throw new RuntimeException("First name, last name and phone number are required");
+        }
+
+        return applicantRepository.save(applicant);
+    }
+
+    //String
+    public Applicant saveApplicant(String firstName, String lastName, String passportNumber, String nationality) {
+
+        if (passportNumber == null || passportNumber.isEmpty()) {
+            throw new RuntimeException("Passport number cannot be null or empty");
+        }
+
+        if (firstName == null || firstName.isEmpty()
+                || lastName == null || lastName.isEmpty()) {
             throw new RuntimeException("First name and last name are required");
         }
+
+        if(nationality == null || nationality.isEmpty()){
+            throw new RuntimeException("Nationality are required");
+        }
+
+        Applicant applicant = new Applicant();
+        applicant.setFirstName(firstName);
+        applicant.setLastName(lastName);
+        applicant.setPassportNumber(passportNumber);
+        applicant.setNationality(nationality);
+        applicant.setCriminalRecord(false);
 
         return applicantRepository.save(applicant);
     }

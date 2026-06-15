@@ -6,6 +6,10 @@ import com.example.Immigration.Management.System.RESTful.API.Repository.Immigrat
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationOfficerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class OfficerService {
 
@@ -44,4 +48,25 @@ public class OfficerService {
         return officerRepository.save(officer);
     }
 
+    public List<ImmigrationOfficer> findOfficerByRank(String rank) {
+        return officerRepository.findByRank(rank);
+    }
+
+    public List<ImmigrationOfficer> findOfficersByRank(String rank, int minimumClearanceLevel) {
+
+        List<ImmigrationOfficer> officers = officerRepository.findByRank(rank);
+        /*List<ImmigrationOfficer> result = new ArrayList<>();
+
+        for(ImmigrationOfficer officer:officers ) {
+            if(officer.getClearanceLevel() >= minimumClearanceLevel){
+                result.add(officer);
+            }
+        }
+        return result;*/
+
+        return officers.stream()
+                .filter(o -> o.getClearanceLevel() >= minimumClearanceLevel)
+                .collect(Collectors.toList());
+    }
 }
+

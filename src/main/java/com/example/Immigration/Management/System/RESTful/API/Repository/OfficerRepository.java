@@ -3,5 +3,8 @@ package com.example.Immigration.Management.System.RESTful.API.Repository;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface OfficerRepository  extends JpaRepository<ImmigrationOfficer, Long> {
+
 }

@@ -16,6 +16,9 @@ public class VisaApplication {
     @ManyToOne
     private Applicant applicant;
 
+    @ManyToOne
+    private ImmigrationOfficer handlingOfficer;
+
     public Long getId() {
         return id;
     }
@@ -54,5 +57,13 @@ public class VisaApplication {
 
     public void setApplicant(Applicant applicant) {
         this.applicant = applicant;
+    }
+
+    public ImmigrationOfficer getHandlingOfficer() {
+        return handlingOfficer;
+    }
+
+    public void setHandlingOfficer(ImmigrationOfficer handlingOfficer) {
+        this.handlingOfficer = handlingOfficer;
     }
 }

@@ -20,9 +20,9 @@ public class Applicant extends Person {
     @OneToMany(mappedBy = "applicant")
     private List<VisaApplication> visaApplications;
 
-    /*@OneToMany(mappedBy = "applicant")
+    @OneToMany(mappedBy = "applicant")
     private List<Interview> interviews;
-*/
+
     public Applicant() {
     }
 
@@ -70,5 +70,13 @@ public class Applicant extends Person {
 
     public void setVisaApplications(List<VisaApplication> visaApplications) {
         this.visaApplications = visaApplications;
+    }
+
+    public List<Interview> getInterviews() {
+        return interviews;
+    }
+
+    public void setInterviews(List<Interview> interviews) {
+        this.interviews = interviews;
     }
 }

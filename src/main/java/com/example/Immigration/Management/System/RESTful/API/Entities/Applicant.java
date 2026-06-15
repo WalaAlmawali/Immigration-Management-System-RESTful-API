@@ -1,5 +1,6 @@
-package com.example.Immigration.Management.System.RESTful.API;
+package com.example.Immigration.Management.System.RESTful.API.Entities;
 
+import com.example.Immigration.Management.System.RESTful.API.Person;
 import jakarta.persistence.*;
 
 @Entity

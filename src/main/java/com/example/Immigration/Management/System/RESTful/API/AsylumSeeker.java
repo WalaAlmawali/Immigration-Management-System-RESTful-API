@@ -9,4 +9,28 @@ public class AsylumSeeker extends Applicant {
 
     private String sponsorOrganization;
 
+    public AsylumSeeker() {
+    }
+
+    public AsylumSeeker(String countryOfOrigin,
+                        String sponsorOrganization) {
+        this.countryOfOrigin = countryOfOrigin;
+        this.sponsorOrganization = sponsorOrganization;
+    }
+
+    public String getCountryOfOrigin() {
+        return countryOfOrigin;
+    }
+
+    public void setCountryOfOrigin(String countryOfOrigin) {
+        this.countryOfOrigin = countryOfOrigin;
+    }
+
+    public String getSponsorOrganization() {
+        return sponsorOrganization;
+    }
+
+    public void setSponsorOrganization(String sponsorOrganization) {
+        this.sponsorOrganization = sponsorOrganization;
+    }
 }

@@ -6,18 +6,17 @@ import com.example.Immigration.Management.System.RESTful.API.Repository.Immigrat
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationOfficerRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class OfficerService {
 
-    private final ImmigrationOfficerRepository officerRepository;
+    private final ImmigrationOfficerRepository immigrationOfficerRepository;
     private final ImmigrationCenterRepository centerRepository;
 
     public OfficerService(ImmigrationOfficerRepository officerRepository, ImmigrationCenterRepository centerRepository) {
-        this.officerRepository = officerRepository;
+        this.immigrationOfficerRepository = officerRepository;
         this.centerRepository = centerRepository;
     }
 
@@ -27,34 +26,34 @@ public class OfficerService {
             throw new RuntimeException("Clearance level must be between 1 and 5");
         }
 
-        ImmigrationOfficer officer = officerRepository.findById(officerId)
+        ImmigrationOfficer officer = immigrationOfficerRepository.findById(officerId)
                 .orElseThrow(() -> new RuntimeException("Officer not found"));
 
         officer.setRank(newRank);
         officer.setClearanceLevel(newClearanceLevel);
 
-        return officerRepository.save(officer);
+        return immigrationOfficerRepository.save(officer);
     }
 
     public ImmigrationOfficer transferOfficer(Long officerId, Long newCenterId) {
 
-        ImmigrationOfficer officer = officerRepository.findById(officerId)
+        ImmigrationOfficer officer = immigrationOfficerRepository.findById(officerId)
                 .orElseThrow(() -> new RuntimeException("Officer not found"));
 
         ImmigrationCenter center = centerRepository.findById(newCenterId)
                 .orElseThrow(() -> new RuntimeException("Center not found"));
 
         officer.setCenter(center);
-        return officerRepository.save(officer);
+        return immigrationOfficerRepository.save(officer);
     }
 
     public List<ImmigrationOfficer> findOfficerByRank(String rank) {
-        return officerRepository.findByRank(rank);
+        return immigrationOfficerRepository.findByRank(rank);
     }
 
     public List<ImmigrationOfficer> findOfficersByRank(String rank, int minimumClearanceLevel) {
 
-        List<ImmigrationOfficer> officers = officerRepository.findByRank(rank);
+        List<ImmigrationOfficer> officers = immigrationOfficerRepository.findByRank(rank);
         /*List<ImmigrationOfficer> result = new ArrayList<>();
 
         for(ImmigrationOfficer officer:officers ) {

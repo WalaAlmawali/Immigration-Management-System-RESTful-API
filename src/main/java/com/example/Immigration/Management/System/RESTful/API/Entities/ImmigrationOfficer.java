@@ -1,6 +1,5 @@
 package com.example.Immigration.Management.System.RESTful.API.Entities;
 
-import com.example.Immigration.Management.System.RESTful.API.Person;
 import jakarta.persistence.*;
 
 import java.util.List;

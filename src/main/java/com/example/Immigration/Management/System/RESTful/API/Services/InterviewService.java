@@ -56,5 +56,24 @@ public class InterviewService {
 
         return interviewRepository.save(interview);
     }
+
+    public Interview cancelInterview(Long interviewId){
+        Interview interview = interviewRepository.findById(interviewId)
+                .orElseThrow(() -> new RuntimeException("Interview not found"));
+
+        interview.setStatus("CANCEL");
+        return interviewRepository.save(interview);
+
+    }
+
+    public List<Interview> getOfficerSchedule(Long officerId,String date){
+
+        ImmigrationOfficer officer = officerRepository.findById(officerId)
+                .orElseThrow(()-> new RuntimeException("Officer not found"));
+
+        return interviewRepository.findByOfficerIdAndInterviewDate(officerId,date);
+
+    }
+
 }
 

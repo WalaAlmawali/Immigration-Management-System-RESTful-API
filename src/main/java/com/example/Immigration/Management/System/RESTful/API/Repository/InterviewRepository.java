@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InterviewRepository  extends JpaRepository<Interview, Long> {
 
-    List<Interview> findByOfficerIdAndInterviewDate(Long officerId, String interviewDate);
+    List<Interview> findByOfficerIdAndInterviewDate(Long officerId, String date);
     List<Interview> findByApplicantId(Long applicantId);
 
 }

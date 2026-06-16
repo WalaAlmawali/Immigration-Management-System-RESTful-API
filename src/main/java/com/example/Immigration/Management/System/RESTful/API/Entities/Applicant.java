@@ -1,6 +1,5 @@
 package com.example.Immigration.Management.System.RESTful.API.Entities;
 
-import com.example.Immigration.Management.System.RESTful.API.Person;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 

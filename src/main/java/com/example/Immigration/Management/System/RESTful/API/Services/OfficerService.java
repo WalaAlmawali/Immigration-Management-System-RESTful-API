@@ -67,5 +67,13 @@ public class OfficerService {
                 .filter(o -> o.getClearanceLevel() >= minimumClearanceLevel)
                 .collect(Collectors.toList());
     }
+
+    public ImmigrationOfficer hireOfficer(ImmigrationOfficer officer){
+
+        if(officer == null){
+            throw new RuntimeException("Officer not found");
+        }
+        return officerRepository.save(officer);
+    }
 }
 

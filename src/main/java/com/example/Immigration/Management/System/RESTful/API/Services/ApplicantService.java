@@ -1,6 +1,7 @@
 package com.example.Immigration.Management.System.RESTful.API.Services;
 
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
+import com.example.Immigration.Management.System.RESTful.API.Entities.AsylumSeeker;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Interview;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.InterviewRepository;
@@ -79,6 +80,22 @@ public class ApplicantService {
             }
         }
         interviewRepository.saveAll(interviews);
+    }
+
+    public AsylumSeeker saveAsylumSeeker(AsylumSeeker seeker){
+
+        if (seeker == null) {
+            throw new RuntimeException("AsylumSeeker not found");
+        }
+
+        if(seeker.getCountryOfOrigin().isBlank() || seeker.getSponsorOrganization().isEmpty()){
+            throw new RuntimeException("Country Of Origin and Sponsor Organization are required");
+
+        }
+
+        return applicantRepository.save(seeker);
+
+
     }
 
 

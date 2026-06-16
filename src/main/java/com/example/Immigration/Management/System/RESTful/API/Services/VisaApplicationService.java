@@ -8,6 +8,9 @@ import com.example.Immigration.Management.System.RESTful.API.Repository.OfficerR
 import com.example.Immigration.Management.System.RESTful.API.Repository.VisaApplicationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class VisaApplicationService {
 
@@ -22,6 +25,7 @@ public class VisaApplicationService {
     }
 
     public VisaApplication submitApplication(Long applicantId, String visaType) {
+
         Applicant applicant = applicantRepository.findById(applicantId)
                 .orElseThrow(() -> new RuntimeException("Applicant not found"));
 
@@ -43,14 +47,14 @@ public class VisaApplicationService {
     public VisaApplication assignOfficer(Long visaId, Long officerId) {
 
         VisaApplication visa = visaRepository.findById(visaId)
-                .orElseThrow(()-> new RuntimeException("Visa not found"));
+                .orElseThrow(() -> new RuntimeException("Visa not found"));
 
         ImmigrationOfficer officer = officerRepository.findById(officerId)
-                .orElseThrow(()-> new RuntimeException("Officer not found"));
+                .orElseThrow(() -> new RuntimeException("Officer not found"));
 
-        if(visa.getVisaType().equalsIgnoreCase("Asylum") && (officer.getClearanceLevel() == 4 || officer.getClearanceLevel() ==5)){
+        if (visa.getVisaType().equalsIgnoreCase("Asylum") && (officer.getClearanceLevel() == 4 || officer.getClearanceLevel() == 5)) {
             visa.setHandlingOfficer(officer);
-        }else{
+        } else {
             throw new RuntimeException("Officer clearance too low for Asylum visa (must be 4 or 5)");
         }
 
@@ -61,7 +65,7 @@ public class VisaApplicationService {
     public VisaApplication processVisa(Long visaId, String newStatus, String notes) {
 
         VisaApplication visa = visaRepository.findById(visaId)
-                .orElseThrow(()-> new RuntimeException("Visa not found"));
+                .orElseThrow(() -> new RuntimeException("Visa not found"));
 
         if (!newStatus.equals("APPROVED") && !newStatus.equals("REJECTED")) {
             throw new RuntimeException("Invalid status. Only APPROVED or REJECTED allowed.");
@@ -71,6 +75,18 @@ public class VisaApplicationService {
         visa.setOfficerNotes(notes);
 
         return visaRepository.save(visa);
+    }
+
+    public List<VisaApplication> getVisasByApplicant(Long applicantId) {
+
+        Applicant applicant = applicantRepository.findById(applicantId)
+                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+
+        return visaRepository.getVisasByApplicant(applicantId);
+    }
+
+    public List<VisaApplication> getVisasByStatus(String status) {
+        return visaRepository.findByStatusIgnoreCase(status);
     }
 
 }

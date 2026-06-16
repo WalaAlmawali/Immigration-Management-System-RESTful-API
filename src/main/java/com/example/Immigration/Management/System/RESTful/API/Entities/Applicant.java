@@ -1,6 +1,7 @@
 package com.example.Immigration.Management.System.RESTful.API.Entities;
 
 import com.example.Immigration.Management.System.RESTful.API.Person;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Applicant extends Person {
     private boolean criminalRecord;
 
     @OneToMany(mappedBy="applicant")
+    @JsonIgnoreProperties("applicant")
     private List<VisaApplication> visaApplications;
 
     @OneToMany(mappedBy="applicant")

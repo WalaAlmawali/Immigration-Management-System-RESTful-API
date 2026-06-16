@@ -1,5 +1,6 @@
 package com.example.Immigration.Management.System.RESTful.API.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,8 @@ public class VisaApplication {
     private String officerNotes;
 
     @ManyToOne
+    @JoinColumn(name = "applicant_id")
+    @JsonIgnoreProperties("visaApplications")
     private Applicant applicant;
 
     @ManyToOne

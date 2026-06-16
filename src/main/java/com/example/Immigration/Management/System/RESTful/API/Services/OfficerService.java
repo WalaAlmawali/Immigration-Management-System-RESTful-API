@@ -1,5 +1,6 @@
 package com.example.Immigration.Management.System.RESTful.API.Services;
 
+import com.example.Immigration.Management.System.RESTful.API.Entities.BorderControlOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationCenter;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationCenterRepository;
@@ -74,6 +75,20 @@ public class OfficerService {
             throw new RuntimeException("Officer not found");
         }
         return officerRepository.save(officer);
+    }
+
+    public BorderControlOfficer hireBorderOfficer(BorderControlOfficer border){
+        if(border == null){
+            throw new RuntimeException("Officer not found");
+        }
+        return officerRepository.save(border);
+    }
+
+    public ImmigrationOfficer getOfficerById(Long id){
+         ImmigrationOfficer officer = officerRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Officer not found"));
+         return officer;
+
     }
 }
 

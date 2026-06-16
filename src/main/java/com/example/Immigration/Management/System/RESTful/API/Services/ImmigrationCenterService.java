@@ -1,6 +1,7 @@
 package com.example.Immigration.Management.System.RESTful.API.Services;
 
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationCenter;
+import com.example.Immigration.Management.System.RESTful.API.Exception.ResourceNotFoundException;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationCenterRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ImmigrationCenterService {
 
     public ImmigrationCenter getCenterById(Long id){
         return centerRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Center not found"));
+                .orElseThrow(()->new ResourceNotFoundException("Center not found"));
     }
 
 }

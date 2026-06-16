@@ -3,6 +3,8 @@ package com.example.Immigration.Management.System.RESTful.API.Services;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Interview;
+import com.example.Immigration.Management.System.RESTful.API.Exception.OfficerAlreadyBookedException;
+import com.example.Immigration.Management.System.RESTful.API.Exception.ResourceNotFoundException;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.InterviewRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.OfficerRepository;
@@ -34,7 +36,7 @@ public class InterviewService {
         List<Interview> existing = interviewRepository.findByOfficerIdAndInterviewDate(officerId, date);
 
         if (!existing.isEmpty()) {
-            throw new RuntimeException("Officer is double-booked!");
+            throw new OfficerAlreadyBookedException("Officer is double-booked!");
         }
 
         Interview interview = new Interview();
@@ -50,7 +52,7 @@ public class InterviewService {
     public Interview completeInterview(Long interviewId) {
 
         Interview interview = interviewRepository.findById(interviewId)
-                .orElseThrow(() -> new RuntimeException("Interview not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Interview not found"));
 
         interview.setStatus("COMPLETED");
 
@@ -59,7 +61,7 @@ public class InterviewService {
 
     public Interview cancelInterview(Long interviewId){
         Interview interview = interviewRepository.findById(interviewId)
-                .orElseThrow(() -> new RuntimeException("Interview not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Interview not found"));
 
         interview.setStatus("CANCEL");
         return interviewRepository.save(interview);
@@ -69,7 +71,7 @@ public class InterviewService {
     public List<Interview> getOfficerSchedule(Long officerId,String date){
 
         ImmigrationOfficer officer = officerRepository.findById(officerId)
-                .orElseThrow(()-> new RuntimeException("Officer not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Officer not found"));
 
         return interviewRepository.findByOfficerIdAndInterviewDate(officerId,date);
 

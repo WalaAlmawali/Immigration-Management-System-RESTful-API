@@ -3,6 +3,7 @@ package com.example.Immigration.Management.System.RESTful.API.Services;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Entities.VisaApplication;
+import com.example.Immigration.Management.System.RESTful.API.Exception.ResourceNotFoundException;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.OfficerRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.VisaApplicationRepository;
@@ -27,7 +28,7 @@ public class VisaApplicationService {
     public VisaApplication submitApplication(Long applicantId, String visaType) {
 
         Applicant applicant = applicantRepository.findById(applicantId)
-                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Applicant not found"));
 
         VisaApplication visa = new VisaApplication();
         visa.setApplicant(applicant);
@@ -47,10 +48,10 @@ public class VisaApplicationService {
     public VisaApplication assignOfficer(Long visaId, Long officerId) {
 
         VisaApplication visa = visaRepository.findById(visaId)
-                .orElseThrow(() -> new RuntimeException("Visa not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Visa not found"));
 
         ImmigrationOfficer officer = officerRepository.findById(officerId)
-                .orElseThrow(() -> new RuntimeException("Officer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Officer not found"));
 
         if (visa.getVisaType().equalsIgnoreCase("Asylum") && (officer.getClearanceLevel() == 4 || officer.getClearanceLevel() == 5)) {
             visa.setHandlingOfficer(officer);
@@ -65,7 +66,7 @@ public class VisaApplicationService {
     public VisaApplication processVisa(Long visaId, String newStatus, String notes) {
 
         VisaApplication visa = visaRepository.findById(visaId)
-                .orElseThrow(() -> new RuntimeException("Visa not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Visa not found"));
 
         if (!newStatus.equals("APPROVED") && !newStatus.equals("REJECTED")) {
             throw new RuntimeException("Invalid status. Only APPROVED or REJECTED allowed.");
@@ -80,7 +81,7 @@ public class VisaApplicationService {
     public List<VisaApplication> getVisasByApplicant(Long applicantId) {
 
         Applicant applicant = applicantRepository.findById(applicantId)
-                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Applicant not found"));
 
         return visaRepository.getVisasByApplicant(applicantId);
     }

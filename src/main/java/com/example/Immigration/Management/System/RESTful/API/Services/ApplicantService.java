@@ -3,6 +3,7 @@ package com.example.Immigration.Management.System.RESTful.API.Services;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
 import com.example.Immigration.Management.System.RESTful.API.Entities.AsylumSeeker;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Interview;
+import com.example.Immigration.Management.System.RESTful.API.Exception.ResourceNotFoundException;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ApplicantRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.InterviewRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ApplicantService {
     public Applicant saveApplicant(Applicant applicant) {
 
         if (applicant == null) {
-            throw new RuntimeException("Applicant not found");
+            throw new ResourceNotFoundException("Applicant not found");
         }
 
         if (applicant.getPassportNumber() == null || applicant.getPassportNumber().isEmpty()) {
@@ -67,7 +68,7 @@ public class ApplicantService {
     public void flagCriminalRecord(Long applicantId){
 
         Applicant applicant = applicantRepository.findById(applicantId)
-                .orElseThrow(() -> new RuntimeException("Applicant not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Applicant not found"));
 
         applicant.setCriminalRecord(true);
         applicantRepository.save(applicant);
@@ -85,7 +86,7 @@ public class ApplicantService {
     public AsylumSeeker saveAsylumSeeker(AsylumSeeker seeker){
 
         if (seeker == null) {
-            throw new RuntimeException("AsylumSeeker not found");
+            throw new ResourceNotFoundException("AsylumSeeker not found");
         }
 
         if(seeker.getCountryOfOrigin().isBlank() || seeker.getSponsorOrganization().isEmpty()){

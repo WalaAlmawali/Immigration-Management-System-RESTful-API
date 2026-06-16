@@ -3,6 +3,7 @@ package com.example.Immigration.Management.System.RESTful.API.Services;
 import com.example.Immigration.Management.System.RESTful.API.Entities.BorderControlOfficer;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationCenter;
 import com.example.Immigration.Management.System.RESTful.API.Entities.ImmigrationOfficer;
+import com.example.Immigration.Management.System.RESTful.API.Exception.ResourceNotFoundException;
 import com.example.Immigration.Management.System.RESTful.API.Repository.ImmigrationCenterRepository;
 import com.example.Immigration.Management.System.RESTful.API.Repository.OfficerRepository;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,10 @@ public class OfficerService {
     public ImmigrationOfficer transferOfficer(Long officerId, Long newCenterId) {
 
         ImmigrationOfficer officer = officerRepository.findById(officerId)
-                .orElseThrow(() -> new RuntimeException("Officer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Officer not found"));
 
         ImmigrationCenter center = centerRepository.findById(newCenterId)
-                .orElseThrow(() -> new RuntimeException("Center not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Center not found"));
 
         officer.setCenter(center);
         return officerRepository.save(officer);
@@ -72,21 +73,21 @@ public class OfficerService {
     public ImmigrationOfficer hireOfficer(ImmigrationOfficer officer){
 
         if(officer == null){
-            throw new RuntimeException("Officer not found");
+            throw new ResourceNotFoundException("Officer not found");
         }
         return officerRepository.save(officer);
     }
 
     public BorderControlOfficer hireBorderOfficer(BorderControlOfficer border){
         if(border == null){
-            throw new RuntimeException("Officer not found");
+            throw new ResourceNotFoundException("Officer not found");
         }
         return officerRepository.save(border);
     }
 
     public ImmigrationOfficer getOfficerById(Long id){
          ImmigrationOfficer officer = officerRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Officer not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Officer not found"));
          return officer;
 
     }

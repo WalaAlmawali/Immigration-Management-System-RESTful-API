@@ -95,7 +95,14 @@ public class ApplicantService {
 
         return applicantRepository.save(seeker);
 
+    }
 
+    public List<Applicant> getAllApplicants(){
+        return applicantRepository.findAll();
+    }
+
+    public List<Applicant> findByNationality(String nationality){
+        return applicantRepository.findByNationality(nationality);
     }
 
 

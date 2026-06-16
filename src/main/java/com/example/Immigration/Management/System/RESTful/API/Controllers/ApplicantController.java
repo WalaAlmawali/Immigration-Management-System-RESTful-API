@@ -3,10 +3,9 @@ package com.example.Immigration.Management.System.RESTful.API.Controllers;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
 import com.example.Immigration.Management.System.RESTful.API.Entities.AsylumSeeker;
 import com.example.Immigration.Management.System.RESTful.API.Services.ApplicantService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/applicants")
@@ -28,5 +27,20 @@ public class ApplicantController {
         return applicantService.saveAsylumSeeker(seeker);
     }
 
+    @GetMapping
+    public List<Applicant> getAll() {
+        return applicantService.getAllApplicants();
+    }
+
+    @GetMapping("/search")
+    public List<Applicant> searchByNationality(@RequestParam String nationality) {
+        return applicantService.findByNationality(nationality);
+    }
+
+    @PutMapping("/{id}/flag")
+    public String flagCriminal(@PathVariable Long id) {
+        applicantService.flagCriminalRecord(id);
+        return "Applicant flagged as criminal and scheduled interviews cancelled.";
+    }
 
 }

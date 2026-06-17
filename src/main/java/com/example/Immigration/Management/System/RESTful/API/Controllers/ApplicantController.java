@@ -1,8 +1,10 @@
 package com.example.Immigration.Management.System.RESTful.API.Controllers;
 
+import com.example.Immigration.Management.System.RESTful.API.DTO.ApplicantDTO;
 import com.example.Immigration.Management.System.RESTful.API.Entities.Applicant;
 import com.example.Immigration.Management.System.RESTful.API.Entities.AsylumSeeker;
 import com.example.Immigration.Management.System.RESTful.API.Services.ApplicantService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class ApplicantController {
     }
 
     @GetMapping
-    public List<Applicant> getAll() {
-        return applicantService.getAllApplicants();
+    public ResponseEntity<List<ApplicantDTO>> getAll() {
+        return ResponseEntity.ok(ApplicantDTO.convertToDTO(applicantService.getAllApplicants()));
     }
 
     @GetMapping("/search")
